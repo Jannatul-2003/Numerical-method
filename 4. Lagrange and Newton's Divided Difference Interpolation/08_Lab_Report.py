@@ -109,27 +109,27 @@ for degree in degrees_to_compute:
     previous_new = new_value
 
 
-print("\n" + "╔" + "═" * 78 + "╗")
-print("║" + " " * 20 + "TEMPERATURE INTERPOLATION AT x = 45 km" + " " * 19 + "║")
-print("╚" + "═" * 78 + "╝")
+print("\n" + "||=" + "=" * 78 + "=||")
+print("||" + " " * 20 + "TEMPERATURE INTERPOLATION AT x = 45 km" + " " * 19 + "||")
+print("||_" + "=" * 78 + "_||")
 
-print("\n" + "┌" + "─" * 78 + "┐")
-print("│" + " " * 25 + "LAGRANGE INTERPOLATION RESULTS" + " " * 23 + "│")
-print("└" + "─" * 78 + "┘")
+print("\n" + "|-" + "--" * 78 + "-|")
+print("|" + " " * 25 + "LAGRANGE INTERPOLATION RESULTS" + " " * 23 + "|")
+print("|_" + "--" * 78 + "_|")
 
 for deg, val, delta, nodes, y_nodes in lagrange_results:
-    print(f"\n{'━' * 80}")
+    print(f"\n{'---' * 80}")
     print(f"  DEGREE {deg} LAGRANGE POLYNOMIAL - P{deg}(x)")
-    print(f"{'━' * 80}")
+    print(f"{'---' * 80}")
     print(f"  Selected Nodes (km):  {nodes}")
-    print(f"  Temperature Data (°C): {y_nodes}")
+    print(f"  Temperature Data (degree C): {y_nodes}")
     print(f"  Number of nodes used:  {len(nodes)}")
     
     print(f"\n  Lagrange Basis Functions at x = {x_target} km:")
     print(f"  {'-' * 76}")
     for i in range(len(nodes)):
         Li_value = lagrange_basis_at_value(nodes, i, x_target)
-        print(f"    L_{i}({x_target}) = {Li_value:>12.8f}  [Node at x = {nodes[i]} km, T = {y_nodes[i]}°C]")
+        print(f"    L_{i}({x_target}) = {Li_value:>12.8f}  [Node at x = {nodes[i]} km, T = {y_nodes[i]}degree C]")
     
     print(f"\n  Polynomial Evaluation:")
     print(f"  {'-' * 76}")
@@ -138,25 +138,25 @@ for deg, val, delta, nodes, y_nodes in lagrange_results:
         Li_value = lagrange_basis_at_value(nodes, i, x_target)
         contribution = Li_value * y_nodes[i]
         total += contribution
-        print(f"    Term {i+1}: L_{i}({x_target}) × T_{i} = {Li_value:.8f} × {y_nodes[i]:.1f} = {contribution:>10.6f}")
+        print(f"    Term {i+1}: L_{i}({x_target}) x T_{i} = {Li_value:.8f} x {y_nodes[i]:.1f} = {contribution:>10.6f}")
     
-    print(f"\n  ╔{'═' * 76}╗")
-    print(f"  ║  P_{deg}({x_target}) = {val:>10.6f} °C" + " " * (76 - len(f"  P_{deg}({x_target}) = {val:>10.6f} °C")) + "║")
-    print(f"  ╚{'═' * 76}╝")
+    print(f"\n  ||={'=' * 76}=||")
+    print(f"  ||  P_{deg}({x_target}) = {val:>10.6f} degree C" + " " * (76 - len(f"  P_{deg}({x_target}) = {val:>10.6f} degree C")) + "||")
+    print(f"  ||_{'=' * 76}_||")
     
     if delta is not None:
         print(f"\n  Convergence Check:")
-        print(f"    Δ_{deg} = |P_{deg}({x_target}) - P_{deg-1}({x_target})| = {delta:.8f} °C")
+        print(f"    del _{deg} = |P_{deg}({x_target}) - P_{deg-1}({x_target})| = {delta:.8f} degree C")
 
 
-print("\n\n" + "┌" + "─" * 78 + "┐")
-print("│" + " " * 20 + "NEWTON'S DIVIDED DIFFERENCE RESULTS" + " " * 23 + "│")
-print("└" + "─" * 78 + "┘")
+print("\n\n" + "|-" + "--" * 78 + "-|")
+print("|" + " " * 20 + "NEWTON'S DIVIDED DIFFERENCE RESULTS" + " " * 23 + "|")
+print("|_" + "--" * 78 + "_|")
 
 for deg, val, delta, nodes, table in newton_results:
-    print(f"\n{'━' * 80}")
+    print(f"\n{'---' * 80}")
     print(f"  DEGREE {deg} NEWTON POLYNOMIAL - N{deg}(x)")
-    print(f"{'━' * 80}")
+    print(f"{'---' * 80}")
     print(f"  Selected Nodes (km): {nodes}")
     print(f"  Number of nodes used: {len(nodes)}")
     
@@ -186,21 +186,21 @@ for deg, val, delta, nodes, table in newton_results:
         else:
             print(f"    a_{i} = f[x_0, x_1, ..., x_{i}] = {table[0][i]:.8f}")
     
-    print(f"\n  ╔{'═' * 76}╗")
-    print(f"  ║  N_{deg}({x_target}) = {val:>10.6f} °C" + " " * (76 - len(f"  N_{deg}({x_target}) = {val:>10.6f} °C")) + "║")
-    print(f"  ╚{'═' * 76}╝")
+    print(f"\n  ||={'=' * 76}=||")
+    print(f"  ||  N_{deg}({x_target}) = {val:>10.6f} degree C" + " " * (76 - len(f"  N_{deg}({x_target}) = {val:>10.6f} degree C")) + "||")
+    print(f"  ||_{'=' * 76}_||")
     
     if delta is not None:
         print(f"\n  Convergence Check:")
-        print(f"    Δ_{deg} = |N_{deg}({x_target}) - N_{deg-1}({x_target})| = {delta:.8f} °C")
+        print(f"    del _{deg} = |N_{deg}({x_target}) - N_{deg-1}({x_target})| = {delta:.8f} degree C")
 
 
-print("\n\n" + "╔" + "═" * 78 + "╗")
-print("║" + " " * 25 + "COMPARISON OF METHODS" + " " * 32 + "║")
-print("╚" + "═" * 78 + "╝\n")
+print("\n\n" + "||=" + "=" * 78 + "=||")
+print("||" + " " * 25 + "COMPARISON OF METHODS" + " " * 32 + "||")
+print("||_" + "=" * 78 + "_||\n")
 
 print(f"{'Degree':<8} {'Lagrange P_k(45)':<20} {'Newton N_k(45)':<20} {'|P_k - N_k|':<15}")
-print("─" * 80)
+print("--" * 80)
 for i, deg in enumerate(degrees_to_compute):
     lag_val = lagrange_results[i][1]
     new_val = newton_results[i][1]
@@ -208,12 +208,12 @@ for i, deg in enumerate(degrees_to_compute):
     print(f"{deg:<8} {lag_val:<20.10f} {new_val:<20.10f} {diff:<15.2e}")
 
 
-print("\n\n" + "╔" + "═" * 78 + "╗")
-print("║" + " " * 28 + "CONVERGENCE SUMMARY" + " " * 31 + "║")
-print("╚" + "═" * 78 + "╝\n")
+print("\n\n" + "||=" + "=" * 78 + "=||")
+print("||" + " " * 28 + "CONVERGENCE SUMMARY" + " " * 31 + "||")
+print("||_" + "=" * 78 + "_||\n")
 
-print(f"{'Degree k':<12} {'P_k(45) [°C]':<18} {'Δ_k (Lagrange)':<18} {'N_k(45) [°C]':<18} {'Δ_k (Newton)':<15}")
-print("─" * 95)
+print(f"{'Degree k':<12} {'P_k(45) [degree C]':<18} {'del _k (Lagrange)':<18} {'N_k(45) [degree C]':<18} {'del _k (Newton)':<15}")
+print("--" * 95)
 for i, deg in enumerate(degrees_to_compute):
     lag_val = lagrange_results[i][1]
     lag_delta = lagrange_results[i][2]
@@ -243,7 +243,7 @@ for idx, (deg, val, delta, nodes, y_nodes) in enumerate(lagrange_results):
 
 ax1.set_title("Lagrange Interpolation (All Degrees)", fontsize=14, fontweight='bold')
 ax1.set_xlabel("Distance (km)", fontsize=12)
-ax1.set_ylabel("Temperature (°C)", fontsize=12)
+ax1.set_ylabel("Temperature (degree C)", fontsize=12)
 ax1.legend(fontsize=9, loc='best')
 ax1.grid(True, alpha=0.3)
 
@@ -258,7 +258,7 @@ for idx, (deg, val, delta, nodes, table) in enumerate(newton_results):
 
 ax2.set_title("Newton's Divided Difference (All Degrees)", fontsize=14, fontweight='bold')
 ax2.set_xlabel("Distance (km)", fontsize=12)
-ax2.set_ylabel("Temperature (°C)", fontsize=12)
+ax2.set_ylabel("Temperature (degree C)", fontsize=12)
 ax2.legend(fontsize=9, loc='best')
 ax2.grid(True, alpha=0.3)
 
@@ -280,12 +280,12 @@ ax1.plot(all_lag_degrees, all_lag_values, marker='o', linewidth=2.5, markersize=
          color='#2E86AB', markeredgecolor='black', markeredgewidth=1.5)
 ax1.set_title("Lagrange Interpolation Values at x=45 km", fontsize=14, fontweight='bold')
 ax1.set_xlabel("Polynomial Degree (k)", fontsize=12)
-ax1.set_ylabel("Pₖ(45) Temperature (°C)", fontsize=12)
+ax1.set_ylabel("Pk(45) Temperature (degree C)", fontsize=12)
 ax1.grid(True, alpha=0.4, linestyle='--')
 ax1.set_xticks(all_lag_degrees)
 
 for deg, val in zip(all_lag_degrees, all_lag_values):
-    ax1.annotate(f'{val:.4f}°C', xy=(deg, val), xytext=(0, 10), 
+    ax1.annotate(f'{val:.4f}degree C', xy=(deg, val), xytext=(0, 10), 
                 textcoords='offset points', ha='center', fontsize=8, 
                 bbox=dict(boxstyle='round,pad=0.4', facecolor='yellow', alpha=0.8))
 
@@ -293,12 +293,12 @@ ax2.plot(all_new_degrees, all_new_values, marker='s', linewidth=2.5, markersize=
          color='#A23B72', markeredgecolor='black', markeredgewidth=1.5)
 ax2.set_title("Newton Interpolation Values at x=45 km", fontsize=14, fontweight='bold')
 ax2.set_xlabel("Polynomial Degree (k)", fontsize=12)
-ax2.set_ylabel("Nₖ(45) Temperature (°C)", fontsize=12)
+ax2.set_ylabel("Nk(45) Temperature (degree C)", fontsize=12)
 ax2.grid(True, alpha=0.4, linestyle='--')
 ax2.set_xticks(all_new_degrees)
 
 for deg, val in zip(all_new_degrees, all_new_values):
-    ax2.annotate(f'{val:.4f}°C', xy=(deg, val), xytext=(0, 10), 
+    ax2.annotate(f'{val:.4f}degree C', xy=(deg, val), xytext=(0, 10), 
                 textcoords='offset points', ha='center', fontsize=8,
                 bbox=dict(boxstyle='round,pad=0.4', facecolor='yellow', alpha=0.8))
 
@@ -313,9 +313,9 @@ lag_deltas = [delta for _, _, delta, _, _ in lagrange_results if delta is not No
 
 ax1.plot(lag_degrees_delta, lag_deltas, marker='o', linewidth=2.5, markersize=10, 
          color='#2E86AB', markeredgecolor='black', markeredgewidth=1.5)
-ax1.set_title("Lagrange Convergence Rate (Δₖ)", fontsize=14, fontweight='bold')
+ax1.set_title("Lagrange Convergence Rate (del k)", fontsize=14, fontweight='bold')
 ax1.set_xlabel("Polynomial Degree (k)", fontsize=12)
-ax1.set_ylabel("Δₖ = |Pₖ(45) − Pₖ₋₁(45)| (°C)", fontsize=12)
+ax1.set_ylabel("del k = |Pk(45) - Pk-1(45)| (degree C)", fontsize=12)
 ax1.grid(True, alpha=0.4, linestyle='--')
 ax1.set_xticks(lag_degrees_delta)
 
@@ -329,9 +329,9 @@ new_deltas = [delta for _, _, delta, _, _ in newton_results if delta is not None
 
 ax2.plot(new_degrees_delta, new_deltas, marker='s', linewidth=2.5, markersize=10, 
          color='#A23B72', markeredgecolor='black', markeredgewidth=1.5)
-ax2.set_title("Newton Convergence Rate (Δₖ)", fontsize=14, fontweight='bold')
+ax2.set_title("Newton Convergence Rate (del k)", fontsize=14, fontweight='bold')
 ax2.set_xlabel("Polynomial Degree (k)", fontsize=12)
-ax2.set_ylabel("Δₖ = |Nₖ(45) − Nₖ₋₁(45)| (°C)", fontsize=12)
+ax2.set_ylabel("del k = |Nk(45) - Nk-1(45)| (degree C)", fontsize=12)
 ax2.grid(True, alpha=0.4, linestyle='--')
 ax2.set_xticks(new_degrees_delta)
 
@@ -346,18 +346,19 @@ plt.savefig('delta_convergence_rate.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
-print("\n\n" + "╔" + "═" * 78 + "╗")
-print("║" + " " * 32 + "FINAL SUMMARY" + " " * 33 + "║")
-print("╚" + "═" * 78 + "╝\n")
+print("\n\n" + "||=" + "=" * 78 + "=||")
+print("||" + " " * 32 + "FINAL SUMMARY" + " " * 33 + "||")
+print("||_" + "=" * 78 + "_||\n")
 
 print(f"  Estimated temperature at x = {x_target} km using highest degree polynomial (Degree 8):")
-print(f"  {'─' * 76}")
-print(f"    Lagrange Method:     {lagrange_results[-1][1]:.10f} °C")
-print(f"    Newton's Method:     {newton_results[-1][1]:.10f} °C")
-print(f"    Absolute Difference: {abs(lagrange_results[-1][1] - newton_results[-1][1]):.2e} °C")
+print(f"  {'--' * 76}")
+print(f"    Lagrange Method:     {lagrange_results[-1][1]:.10f} degree C")
+print(f"    Newton's Method:     {newton_results[-1][1]:.10f} degree C")
+print(f"    Absolute Difference: {abs(lagrange_results[-1][1] - newton_results[-1][1]):.2e} degree C")
 print(f"\n  Both methods produce identical results (as expected theoretically).")
 
 print(f"\n  Convergence Analysis:")
-print(f"  {'─' * 76}")
-print(f"    Final convergence (Δ₈): {lagrange_results[-1][2]:.10f} °C")
+print(f"  {'--' * 76}")
+print(f"    Final convergence (del 8): {lagrange_results[-1][2]:.10f} degree C")
 print(f"    This represents the change from Degree 7 to Degree 8 polynomial.")
+
